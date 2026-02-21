@@ -18,21 +18,15 @@ class Settings(BaseSettings):
     debug: bool = False
 
     # ── CORS ─────────────────────────────────────────────────────────────────
-    allowed_origins: List[str] = Field(
-        default=["http://localhost:3000", "http://localhost:8000"],
-        validation_alias="CORS_ORIGINS"
-    )
+    # Reads from CORS_ORIGINS environment variable
+    cors_origins: str = "http://localhost:3000,http://localhost:8000"
 
-    @field_validator("allowed_origins", mode="before")
-    @classmethod
-    def parse_cors_origins(cls, v):
-        """Parse CORS origins from string or list."""
-        if isinstance(v, str):
-            # Handle comma-separated string or single origin
-            if v == "*":
-                return ["*"]
-            return [origin.strip() for origin in v.split(",") if origin.strip()]
-        return v
+    @property
+    def allowed_origins(self) -> List[str]:
+        """Parse CORS origins from comma-separated string."""
+        if self.cors_origins == "*":
+            return ["*"]
+        return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
 
     # ── Database ─────────────────────────────────────────────────────────────
     database_url: str = (
