@@ -1,7 +1,7 @@
 from functools import lru_cache
 from typing import List
 
-from pydantic import AnyUrl, field_validator
+from pydantic import AnyUrl, Field, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -18,14 +18,19 @@ class Settings(BaseSettings):
     debug: bool = False
 
     # ── CORS ─────────────────────────────────────────────────────────────────
-    allowed_origins: List[str] = ["http://localhost:3000", "http://localhost:8000"]
+    allowed_origins: List[str] = Field(
+        default=["http://localhost:3000", "http://localhost:8000"],
+        validation_alias="CORS_ORIGINS"
+    )
 
     @field_validator("allowed_origins", mode="before")
     @classmethod
     def parse_cors_origins(cls, v):
         """Parse CORS origins from string or list."""
         if isinstance(v, str):
-            # Handle comma-separated string
+            # Handle comma-separated string or single origin
+            if v == "*":
+                return ["*"]
             return [origin.strip() for origin in v.split(",") if origin.strip()]
         return v
 
