@@ -55,6 +55,7 @@ Thumbs.db
 .pytest_cache/
 .coverage
 htmlcov/
+test_db_connection.py
 
 # Seed script (optional - remove if you want to commit it)
 # seed_data.py
