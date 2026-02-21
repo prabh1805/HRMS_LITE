@@ -20,6 +20,15 @@ class Settings(BaseSettings):
     # ── CORS ─────────────────────────────────────────────────────────────────
     allowed_origins: List[str] = ["http://localhost:3000", "http://localhost:8000"]
 
+    @field_validator("allowed_origins", mode="before")
+    @classmethod
+    def parse_cors_origins(cls, v):
+        """Parse CORS origins from string or list."""
+        if isinstance(v, str):
+            # Handle comma-separated string
+            return [origin.strip() for origin in v.split(",") if origin.strip()]
+        return v
+
     # ── Database ─────────────────────────────────────────────────────────────
     database_url: str = (
         "postgresql+asyncpg://postgres:password@localhost:5432/hrmslite"
