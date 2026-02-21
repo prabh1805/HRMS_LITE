@@ -1,0 +1,17 @@
+# Web framework
+fastapi==0.111.0
+uvicorn[standard]==0.29.0
+
+# Database
+sqlalchemy==2.0.46
+asyncpg==0.31.0          # async PostgreSQL driver (Python 3.13 support)
+psycopg[binary]==3.2.3   # sync driver (used by Alembic)
+alembic==1.13.1
+greenlet==3.3.2          # required by SQLAlchemy async
+
+# Validation & settings
+pydantic==2.10.6         # Python 3.13 support
+pydantic-settings==2.7.1
+
+# Utilities
+python-dotenv==1.0.1
