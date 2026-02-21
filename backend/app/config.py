@@ -33,6 +33,11 @@ class Settings(BaseSettings):
     def validate_database_url(cls, v: str) -> str:
         if not v.startswith("postgresql"):
             raise ValueError("DATABASE_URL must be a PostgreSQL connection string.")
+        # Convert postgres:// to postgresql+asyncpg:// for Render compatibility
+        if v.startswith("postgres://"):
+            v = v.replace("postgres://", "postgresql+asyncpg://", 1)
+        elif v.startswith("postgresql://") and "asyncpg" not in v:
+            v = v.replace("postgresql://", "postgresql+asyncpg://", 1)
         return v
 
 

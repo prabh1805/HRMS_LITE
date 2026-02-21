@@ -317,6 +317,18 @@ netstat -ano | findstr :5173   # Windows
 
 This project is created for educational/demonstration purposes.
 
+## 🚀 Deployment
+
+This project is configured for easy deployment on Render.com. See [DEPLOYMENT.md](DEPLOYMENT.md) for detailed deployment instructions.
+
+**Quick Deploy:**
+1. Create PostgreSQL database on Render
+2. Deploy backend as Web Service
+3. Deploy frontend as Static Site
+4. Update environment variables
+
+Live Demo: [Coming Soon]
+
 ## 👤 Author
 
 **Prabhat Jha**
